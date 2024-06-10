@@ -3,7 +3,7 @@ services:
     image: golang:1.22
     tty: true
     volumes:
-      - ./app:/go/src/app
+      - ./server:/go/src/app
     working_dir: /go/src/app/
     ports:
       - 80:80

@@ -1,7 +1,8 @@
-package main
+package repository
 
 import (
 	"database/sql"
+	"errors"
 
 	_ "github.com/mattn/go-sqlite3"
 )
@@ -11,7 +12,7 @@ const (
 	dbFile    = "./chat.db"
 )
 
-func initDb() error {
+func InitDb() error {
 	DbConnection, err := sql.Open(sqlEngine, dbFile)
 	if err != nil {
 		return err
@@ -27,7 +28,11 @@ func initDb() error {
 	return nil
 }
 
-func addPost(body string) error {
+func AddPost(body string) error {
+	if body == "" {
+		return errors.New("empty body field")
+	}
+
 	DbConnection, err := sql.Open(sqlEngine, dbFile)
 	if err != nil {
 		return err
@@ -43,7 +48,7 @@ func addPost(body string) error {
 	return nil
 }
 
-func getPosts() ([]Post, error) {
+func GetPosts() ([]Post, error) {
 	DbConnection, err := sql.Open(sqlEngine, dbFile)
 	if err != nil {
 		return nil, err
